@@ -1,0 +1,1452 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="light" data-font="medium">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stray Kids (SKZ) 粉絲專屬諮詢 — TASY (小指南)</title>
+
+  <style>
+    /* ==================== 1. 60-30-10 配色與無障礙字體變數 ==================== */
+    :root {
+      /* 60% 主色：夢幻星空紫羅蘭漸層 */
+      --bg-gradient: linear-gradient(155deg, #8B72D6 0%, #A986E5 50%, #D89CE0 100%);
+      /* 30% 次要色：雲朵純白與寶寶天藍 */
+      --surface-card: rgba(255, 255, 255, 0.94);
+      --surface-aside: rgba(255, 255, 255, 0.32);
+      --surface-baby-blue: #CFE7FA;
+      --surface-baby-blue-deep: #B5DBFA;
+      --surface-bubble-bot: #EBF5FE;
+      --surface-input: #F6F4FC;
+      --border-soft: rgba(167, 139, 250, 0.35);
+      /* 10% 強調色：耳朵星星亮黃與亮薰衣草紫 */
+      --accent-star: #FBE468;
+      --accent-star-hover: #F5D033;
+      --accent-lavender: #A78BFA;
+      --accent-lavender-deep: #8B5CF6;
+      /* 高對比文字色彩 */
+      --text-primary: #241C42;
+      --text-secondary: #534878;
+      --text-on-lavender: #FFFFFF;
+      --text-on-star: #241C42;
+      --shadow-elevated: 0 20px 44px -12px rgba(36, 28, 66, 0.28);
+      /* 動態字級 */
+      --chat-font-size: 1rem;
+      --ui-font-size: 0.875rem;
+    }
+
+    html[data-theme="dark"] {
+      --bg-gradient: linear-gradient(155deg, #151029 0%, #241B46 52%, #35235C 100%);
+      --surface-card: rgba(28, 22, 54, 0.95);
+      --surface-aside: rgba(38, 29, 72, 0.60);
+      --surface-baby-blue: #253652;
+      --surface-baby-blue-deep: #30476B;
+      --surface-bubble-bot: #273854;
+      --surface-input: #17122B;
+      --border-soft: rgba(196, 181, 253, 0.26);
+      --accent-star: #FBE468;
+      --accent-star-hover: #F5D033;
+      --accent-lavender: #C4B5FD;
+      --accent-lavender-deep: #9F7AEA;
+      --text-primary: #F5F3FC;
+      --text-secondary: #C5BBE3;
+      --text-on-lavender: #17122B;
+      --text-on-star: #161229;
+      --shadow-elevated: 0 22px 48px -12px rgba(0, 0, 0, 0.62);
+    }
+
+    html[data-font="small"] {
+      --chat-font-size: 0.9rem;
+      --ui-font-size: 0.8rem;
+    }
+
+    html[data-font="medium"] {
+      --chat-font-size: 1rem;
+      --ui-font-size: 0.875rem;
+    }
+
+    html[data-font="large"] {
+      --chat-font-size: 1.2rem;
+      --ui-font-size: 0.98rem;
+    }
+
+    /* ==================== 2. 基礎重置 ==================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-primary);
+      min-height: 100dvh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      overflow: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    /* ==================== 3. 背景星光與雲朵裝飾 ==================== */
+    .sky-backdrop {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .star-dot {
+      position: absolute;
+      border-radius: 50%;
+      background: #FFFFFF;
+      opacity: 0.85;
+      animation: twinkle 3.2s ease-in-out infinite;
+    }
+
+    .star-dot--gold {
+      background: var(--accent-star);
+    }
+
+    .cloud-puff {
+      position: absolute;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.36) 0%, rgba(255, 255, 255, 0) 72%);
+      filter: blur(8px);
+    }
+
+    html[data-theme="dark"] .cloud-puff {
+      background: radial-gradient(circle, rgba(167, 139, 250, 0.18) 0%, rgba(167, 139, 250, 0) 72%);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.9; transform: scale(1); }
+      50% { opacity: 0.25; transform: scale(0.72); }
+    }
+
+    @keyframes floatCharacter {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes tasyCornerFloat {
+      0%, 100% { transform: translateY(0px) rotate(-2deg); }
+      50% { transform: translateY(-7px) rotate(2.5deg); }
+    }
+
+    @keyframes tasyCornerBounce {
+      0%, 100% { transform: translateY(0px) scale(1); }
+      50% { transform: translateY(-9px) scale(1.07); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .star-dot,
+      .mascot-figure,
+      .floating-tasy-btn {
+        animation: none !important;
+      }
+    }
+
+    /* ==================== 4. 左上角漂浮 TASY 小精靈 ==================== */
+    .floating-tasy-anchor {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 30;
+      display: flex;
+      align-items: flex-start;
+      gap: 0.45rem;
+      pointer-events: none;
+    }
+
+    .floating-tasy-btn {
+      pointer-events: auto;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: 2.5px solid var(--accent-star);
+      background: var(--surface-baby-blue);
+      box-shadow: 0 8px 20px rgba(36, 28, 66, 0.24), 0 0 0 3px rgba(167, 139, 250, 0.35);
+      cursor: pointer;
+      padding: 2px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: tasyCornerFloat 3.4s ease-in-out infinite;
+      transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+    }
+
+    .floating-tasy-btn:hover {
+      border-color: var(--accent-lavender);
+      box-shadow: 0 10px 24px rgba(139, 92, 246, 0.38), 0 0 0 4px rgba(251, 228, 104, 0.45);
+    }
+
+    .floating-tasy-btn:focus-visible {
+      outline: 2.5px solid var(--accent-star);
+      outline-offset: 2px;
+    }
+
+    .floating-tasy-btn.is-active-state {
+      animation: tasyCornerBounce 1.1s ease-in-out infinite;
+      border-color: var(--accent-lavender);
+      box-shadow: 0 0 18px rgba(251, 228, 104, 0.75), 0 0 0 4px rgba(167, 139, 250, 0.45);
+    }
+
+    .floating-tasy-btn img,
+    .floating-tasy-btn svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 50%;
+    }
+
+    .floating-tasy-bubble {
+      pointer-events: none;
+      max-width: 195px;
+      padding: 0.42rem 0.72rem;
+      border-radius: 14px;
+      border-top-left-radius: 4px;
+      background: var(--surface-card);
+      color: var(--text-primary);
+      border: 1.5px solid var(--accent-lavender);
+      box-shadow: 0 8px 18px rgba(36, 28, 66, 0.18);
+      font-size: 0.76rem;
+      font-weight: 700;
+      line-height: 1.35;
+      opacity: 0;
+      transform: translateY(-4px) scale(0.96);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    .floating-tasy-bubble.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @media (min-width: 960px) {
+      .floating-tasy-anchor {
+        top: 22px;
+        left: 22px;
+      }
+
+      .floating-tasy-btn {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    /* ==================== 5. RWD 雙欄 / 單欄架構 ==================== */
+    .app-shell {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1160px;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mascot-aside {
+      display: none;
+    }
+
+    .chat-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: var(--surface-card);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      overflow: hidden;
+      box-shadow: var(--shadow-elevated);
+    }
+
+    @media (min-width: 960px) {
+      .app-shell {
+        flex-direction: row;
+        gap: 1.5rem;
+        padding: 1.5rem;
+      }
+
+      .mascot-aside {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 35%;
+        min-width: 310px;
+        background: var(--surface-aside);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        border-radius: 28px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow-elevated);
+      }
+
+      html[data-theme="dark"] .mascot-aside {
+        border-color: var(--border-soft);
+      }
+
+      .chat-main {
+        border-radius: 28px;
+        border: 1px solid var(--border-soft);
+      }
+    }
+
+    /* ==================== 6. 電腦版左側 TASY 去背形象區 ==================== */
+    .aside-top {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 0.5rem;
+      padding-left: 68px;
+    }
+
+    .badge-star {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.38rem 0.9rem;
+      border-radius: 999px;
+      background: var(--accent-star);
+      color: var(--text-on-star);
+      font-size: 0.8rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(245, 208, 51, 0.35);
+    }
+
+    .step-out-tag {
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: #FFFFFF;
+      text-shadow: 0 2px 6px rgba(36, 28, 66, 0.35);
+    }
+
+    .mascot-stage {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    .mascot-figure {
+      position: relative;
+      width: 240px;
+      height: 275px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: floatCharacter 4s ease-in-out infinite;
+    }
+
+    .mascot-figure::before {
+      content: "";
+      position: absolute;
+      width: 205px;
+      height: 205px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(251, 228, 104, 0.42) 0%, rgba(167, 139, 250, 0.16) 45%, rgba(207, 231, 250, 0) 72%);
+      z-index: -1;
+    }
+
+    .mascot-figure img,
+    .mascot-figure svg {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 14px 20px rgba(36, 28, 66, 0.25));
+    }
+
+    .mascot-title {
+      margin-top: 0.75rem;
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: #FFFFFF;
+      text-shadow: 0 2px 10px rgba(36, 28, 66, 0.35);
+    }
+
+    .mascot-subtitle {
+      margin-top: 0.3rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: rgba(255, 255, 255, 0.92);
+      text-shadow: 0 1px 6px rgba(36, 28, 66, 0.25);
+    }
+
+    .aside-tip-card {
+      background: var(--surface-card);
+      border-radius: 18px;
+      padding: 1rem 1.15rem;
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: var(--text-primary);
+      border: 1px solid var(--border-soft);
+      box-shadow: 0 6px 16px rgba(36, 28, 66, 0.08);
+    }
+
+    /* ==================== 7. 頂部標題與無障礙工具列 ==================== */
+    .chat-header {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.65rem;
+      padding: 0.8rem 1rem;
+      background: var(--surface-baby-blue);
+      border-bottom: 1px solid var(--border-soft);
+    }
+
+    .header-brand {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      min-width: 0;
+      padding-left: 62px;
+    }
+
+    @media (min-width: 960px) {
+      .header-brand {
+        padding-left: 0;
+      }
+    }
+
+    .header-mobile-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #FFFFFF;
+      border: 2.5px solid var(--accent-star);
+      flex-shrink: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 3px 8px rgba(36, 28, 66, 0.14);
+    }
+
+    @media (min-width: 960px) {
+      .header-mobile-avatar {
+        display: none;
+      }
+    }
+
+    .header-mobile-avatar img,
+    .header-mobile-avatar svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .header-titles {
+      min-width: 0;
+    }
+
+    .header-titles h1 {
+      font-size: 1.02rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .header-pill {
+      display: inline-block;
+      padding: 0.12rem 0.52rem;
+      border-radius: 999px;
+      background: var(--accent-lavender);
+      color: var(--text-on-lavender);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .header-titles p {
+      font-size: 0.76rem;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .a11y-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+      flex-shrink: 0;
+    }
+
+    .font-control-group {
+      display: inline-flex;
+      align-items: center;
+      background: var(--surface-card);
+      border: 1px solid var(--border-soft);
+      border-radius: 12px;
+      padding: 0.2rem;
+      gap: 0.12rem;
+    }
+
+    .font-size-btn {
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 0.32rem 0.48rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .font-size-btn:hover {
+      background: var(--surface-baby-blue);
+      color: var(--text-primary);
+    }
+
+    .font-size-btn[aria-pressed="true"] {
+      background: var(--accent-lavender-deep);
+      color: #FFFFFF;
+    }
+
+    .font-size-btn:focus-visible,
+    .theme-btn:focus-visible,
+    .quick-btn:focus-visible,
+    .icon-action-btn:focus-visible,
+    .chat-input:focus-visible {
+      outline: 2px solid var(--accent-lavender-deep);
+      outline-offset: 2px;
+    }
+
+    .theme-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border: none;
+      border-radius: 12px;
+      background: var(--accent-star);
+      color: var(--text-on-star);
+      cursor: pointer;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .theme-btn:hover {
+      background: var(--accent-star-hover);
+      transform: translateY(-1px);
+    }
+
+    /* ==================== 8. 即時狀態提示列 ==================== */
+    .status-bar {
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.48rem 1.15rem;
+      background: var(--surface-input);
+      border-bottom: 1px solid var(--border-soft);
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #10B981;
+      flex-shrink: 0;
+    }
+
+    .status-dot.is-listening {
+      background: #EF4444;
+      box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.25);
+    }
+
+    .status-dot.is-thinking {
+      background: #F59E0B;
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.25);
+    }
+
+    .status-dot.is-error {
+      background: #DC2626;
+    }
+
+    /* ==================== 9. 聊天對話視窗 ==================== */
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
+      scroll-behavior: smooth;
+    }
+
+    .msg-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      width: 100%;
+    }
+
+    .msg-row--user {
+      justify-content: flex-end;
+    }
+
+    .bot-avatar {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      background: var(--surface-baby-blue);
+      border: 2.5px solid var(--accent-star);
+      box-shadow: 0 4px 10px rgba(36, 28, 66, 0.14);
+      overflow: hidden;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bot-avatar img,
+    .bot-avatar svg {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .msg-content-wrap {
+      max-width: 82%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+
+    .bubble {
+      padding: 0.88rem 1.08rem;
+      border-radius: 20px;
+      font-size: var(--chat-font-size);
+      line-height: 1.65;
+      word-break: break-word;
+      white-space: pre-line;
+      box-shadow: 0 3px 10px rgba(36, 28, 66, 0.06);
+    }
+
+    .bubble--bot {
+      background: var(--surface-bubble-bot);
+      color: var(--text-primary);
+      border: 1px solid var(--border-soft);
+      border-top-left-radius: 4px;
+    }
+
+    .bubble--user {
+      background: var(--accent-lavender-deep);
+      color: #FFFFFF;
+      border-top-right-radius: 4px;
+    }
+
+    .quick-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .quick-btn {
+      border: 1.5px solid var(--accent-lavender);
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+      background: var(--accent-star);
+      color: var(--text-on-star);
+      font-size: var(--ui-font-size);
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(167, 139, 250, 0.25);
+      transition: background 0.2s, transform 0.15s, border-color 0.2s;
+    }
+
+    .quick-btn:hover {
+      background: var(--accent-star-hover);
+      border-color: var(--accent-lavender-deep);
+      transform: translateY(-2px);
+    }
+
+    /* ==================== 10. 底部固定輸入列 ==================== */
+    .chat-footer {
+      flex-shrink: 0;
+      padding: 0.85rem 1rem;
+      background: var(--surface-card);
+      border-top: 1px solid var(--border-soft);
+    }
+
+    .chat-form {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .icon-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+      border: none;
+      border-radius: 16px;
+      padding: 0.78rem 0.92rem;
+      font-size: 0.92rem;
+      font-weight: 800;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background 0.2s, transform 0.15s, opacity 0.2s;
+    }
+
+    .voice-btn {
+      background: var(--surface-baby-blue);
+      color: var(--text-primary);
+      border: 1px solid var(--border-soft);
+    }
+
+    .voice-btn:hover {
+      background: var(--surface-baby-blue-deep);
+    }
+
+    .voice-btn.is-recording {
+      background: #EF4444;
+      color: #FFFFFF;
+    }
+
+    .send-btn {
+      background: var(--accent-star);
+      color: var(--text-on-star);
+      border: 1.5px solid var(--accent-lavender);
+      padding: 0.78rem 1.15rem;
+    }
+
+    .send-btn:hover:not(:disabled) {
+      background: var(--accent-star-hover);
+      transform: translateY(-1px);
+    }
+
+    .send-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .chat-input {
+      flex: 1;
+      min-width: 0;
+      padding: 0.78rem 1rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-soft);
+      background: var(--surface-input);
+      color: var(--text-primary);
+      font-size: var(--chat-font-size);
+      font-family: inherit;
+    }
+
+    .chat-input::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.75;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 夢幻星空與雲朵背景 -->
+  <div class="sky-backdrop" aria-hidden="true">
+    <div class="cloud-puff" style="top: 12%; left: -4%; width: 260px; height: 110px;"></div>
+    <div class="cloud-puff" style="bottom: 10%; right: -5%; width: 320px; height: 130px;"></div>
+    <span class="star-dot" style="top: 8%; left: 10%; width: 9px; height: 9px;"></span>
+    <span class="star-dot star-dot--gold" style="top: 18%; right: 16%; width: 8px; height: 8px; animation-delay: 0.9s;"></span>
+    <span class="star-dot" style="bottom: 22%; left: 7%; width: 11px; height: 11px; animation-delay: 1.6s;"></span>
+    <span class="star-dot star-dot--gold" style="top: 52%; left: 32%; width: 6px; height: 6px; animation-delay: 2.1s;"></span>
+    <span class="star-dot" style="top: 34%; right: 8%; width: 7px; height: 7px; animation-delay: 1.2s;"></span>
+  </div>
+
+  <!-- 左上角漂浮 TASY 小精靈 -->
+  <div class="floating-tasy-anchor" aria-live="polite">
+    <button
+      type="button"
+      id="floating-tasy"
+      class="floating-tasy-btn"
+      aria-label="漂浮的 TASY 小精靈，點擊與 TASY 互動"
+      title="Step Out! 嗨 STAY，點我打招呼～"
+    >
+      <img
+        id="tasy-floating-img"
+        src="./images/tasy-avatar.png"
+        alt="漂浮的 TASY 小精靈"
+      />
+      <svg id="tasy-floating-svg" class="hidden" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="100" height="100" fill="#CFE7FA"/>
+        <circle cx="24" cy="30" r="18" fill="#B5DBFA"/>
+        <circle cx="76" cy="30" r="18" fill="#B5DBFA"/>
+        <path d="M50 32 C38 20, 16 28, 18 54 C20 76, 38 88, 50 88 C62 88, 80 76, 82 54 C84 28, 62 20, 50 32 Z" fill="#FFFFFF"/>
+        <path d="M22 14 L26 21 L34 22 L28 28 L29 36 L22 32 L15 36 L16 28 L10 22 L18 21 Z" fill="#FBE468"/>
+        <circle cx="36" cy="54" r="8" fill="#241C42"/>
+        <circle cx="33" cy="51" r="2.8" fill="#FFFFFF"/>
+        <circle cx="64" cy="54" r="8" fill="#241C42"/>
+        <circle cx="61" cy="51" r="2.8" fill="#FFFFFF"/>
+        <ellipse cx="50" cy="63" rx="3" ry="2" fill="#F6A5B8"/>
+        <path d="M45 67 Q47.5 70 50 67 Q52.5 70 55 67" stroke="#241C42" stroke-width="2" stroke-linecap="round" fill="none"/>
+      </svg>
+    </button>
+    <div id="floating-tasy-bubble" class="floating-tasy-bubble" role="status">
+      Step Out! 嗨 STAY～✨
+    </div>
+  </div>
+
+  <!-- 主應用程式容器 -->
+  <div class="app-shell">
+
+    <!-- 左側欄（電腦版 >= 960px）：TASY 去背形象圖 -->
+    <aside class="mascot-aside" aria-label="TASY 角色展示區">
+      <div class="aside-top">
+        <span class="badge-star">★ STAY 專屬嚮導</span>
+        <span class="step-out-tag">STEP OUT!</span>
+      </div>
+
+      <div class="mascot-stage">
+        <div class="mascot-figure">
+          <img
+            id="tasy-desktop-img"
+            src="./images/tasy-character.png"
+            alt="TASY 小指南全身去背形象圖"
+          />
+          <svg id="tasy-desktop-svg" class="hidden" viewBox="0 0 260 300" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TASY 可愛寶寶藍角色">
+            <g stroke="#FFFFFF" stroke-width="11" stroke-linejoin="round" stroke-linecap="round">
+              <circle cx="72" cy="82" r="42" fill="#CFE7FA"/>
+              <circle cx="188" cy="82" r="42" fill="#CFE7FA"/>
+              <ellipse cx="130" cy="145" rx="68" ry="60" fill="#CFE7FA"/>
+              <rect x="94" y="195" width="72" height="58" rx="30" fill="#CFE7FA"/>
+              <ellipse cx="82" cy="215" rx="18" ry="12" transform="rotate(-25 82 215)" fill="#FFFFFF"/>
+              <ellipse cx="178" cy="215" rx="18" ry="12" transform="rotate(25 178 215)" fill="#FFFFFF"/>
+              <ellipse cx="105" cy="256" rx="16" ry="20" fill="#FFFFFF"/>
+              <ellipse cx="155" cy="256" rx="16" ry="20" fill="#FFFFFF"/>
+            </g>
+            <ellipse cx="82" cy="215" rx="18" ry="12" transform="rotate(-25 82 215)" fill="#FFFFFF" stroke="#85BCEB" stroke-width="2.5"/>
+            <ellipse cx="178" cy="215" rx="18" ry="12" transform="rotate(25 178 215)" fill="#FFFFFF" stroke="#85BCEB" stroke-width="2.5"/>
+            <ellipse cx="105" cy="256" rx="16" ry="20" fill="#FFFFFF" stroke="#85BCEB" stroke-width="2.5"/>
+            <ellipse cx="155" cy="256" rx="16" ry="20" fill="#FFFFFF" stroke="#85BCEB" stroke-width="2.5"/>
+            <rect x="94" y="195" width="72" height="58" rx="30" fill="#CFE7FA" stroke="#85BCEB" stroke-width="2.5"/>
+            <circle cx="72" cy="82" r="42" fill="#CFE7FA" stroke="#85BCEB" stroke-width="2.5"/>
+            <circle cx="188" cy="82" r="42" fill="#CFE7FA" stroke="#85BCEB" stroke-width="2.5"/>
+            <ellipse cx="130" cy="145" rx="68" ry="60" fill="#CFE7FA" stroke="#85BCEB" stroke-width="2.5"/>
+            <path d="M130 112 C112 94, 74 105, 76 142 C78 175, 110 194, 130 194 C150 194, 182 175, 184 142 C186 105, 148 94, 130 112 Z" fill="#FFFFFF"/>
+            <path d="M62 46 L70 58 L84 60 L74 70 L76 84 L62 77 L49 84 L51 70 L41 60 L55 58 Z" fill="#FBE468" stroke="#F5D033" stroke-width="2" stroke-linejoin="round"/>
+            <ellipse cx="103" cy="146" rx="17" ry="19" fill="#241C42"/>
+            <circle cx="97" cy="139" r="6" fill="#FFFFFF"/>
+            <circle cx="108" cy="151" r="3" fill="#FFFFFF"/>
+            <ellipse cx="157" cy="146" rx="17" ry="19" fill="#241C42"/>
+            <circle cx="151" cy="139" r="6" fill="#FFFFFF"/>
+            <circle cx="162" cy="151" r="3" fill="#FFFFFF"/>
+            <ellipse cx="130" cy="160" rx="4.5" ry="3" fill="#F6A5B8"/>
+            <path d="M122 166 Q126 171 130 166 Q134 171 138 166" stroke="#241C42" stroke-width="2.3" stroke-linecap="round" fill="none"/>
+          </svg>
+        </div>
+
+        <h2 class="mascot-title">TASY 小指南</h2>
+        <p class="mascot-subtitle">Stray Kids 資深 STAY 陪伴小夥伴</p>
+      </div>
+
+      <div class="aside-tip-card">
+        <strong>💡 互動小秘訣：</strong>
+        你可以打字、點擊麥克風說話，或點點左上角漂浮的 TASY！我會根據資料完整整理並清楚解答喔～
+      </div>
+    </aside>
+
+    <!-- 右側 / 主聊天工作區 -->
+    <main class="chat-main">
+      <!-- 頂部標題與無障礙設定列 -->
+      <header class="chat-header">
+        <div class="header-brand">
+          <div class="header-mobile-avatar">
+            <img
+              class="tasy-avatar-img"
+              src="./images/tasy-avatar.png"
+              alt="TASY 頭貼"
+            />
+            <svg class="tasy-avatar-svg hidden" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="100" height="100" fill="#CFE7FA"/>
+              <circle cx="24" cy="30" r="18" fill="#B5DBFA"/>
+              <circle cx="76" cy="30" r="18" fill="#B5DBFA"/>
+              <path d="M50 32 C38 20, 16 28, 18 54 C20 76, 38 88, 50 88 C62 88, 80 76, 82 54 C84 28, 62 20, 50 32 Z" fill="#FFFFFF"/>
+              <path d="M22 14 L26 21 L34 22 L28 28 L29 36 L22 32 L15 36 L16 28 L10 22 L18 21 Z" fill="#FBE468"/>
+              <circle cx="36" cy="54" r="8" fill="#241C42"/>
+              <circle cx="33" cy="51" r="2.8" fill="#FFFFFF"/>
+              <circle cx="64" cy="54" r="8" fill="#241C42"/>
+              <circle cx="61" cy="51" r="2.8" fill="#FFFFFF"/>
+              <ellipse cx="50" cy="63" rx="3" ry="2" fill="#F6A5B8"/>
+              <path d="M45 67 Q47.5 70 50 67 Q52.5 70 55 67" stroke="#241C42" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+
+          <div class="header-titles">
+            <h1>
+              <span>Stray Kids 粉絲專屬諮詢</span>
+              <span class="header-pill">TASY</span>
+            </h1>
+            <p>有問必答的 STAY 小指南</p>
+          </div>
+        </div>
+
+        <div class="a11y-toolbar" role="toolbar" aria-label="無障礙顯示設定">
+          <div class="font-control-group" role="group" aria-label="調整文字大小">
+            <button type="button" class="font-size-btn" data-font-size="small" aria-pressed="false" aria-label="小字體">小</button>
+            <button type="button" class="font-size-btn" data-font-size="medium" aria-pressed="true" aria-label="中字體">中</button>
+            <button type="button" class="font-size-btn" data-font-size="large" aria-pressed="false" aria-label="大字體">大</button>
+          </div>
+
+          <button type="button" id="theme-toggle" class="theme-btn" aria-pressed="false" aria-label="切換淺色或深色模式" title="切換淺色/深色模式">
+            <svg id="icon-sun" class="hidden" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+            </svg>
+            <svg id="icon-moon" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- 即時無障礙狀態列 -->
+      <div class="status-bar" role="status" aria-live="polite">
+        <div class="status-indicator">
+          <span id="status-dot" class="status-dot"></span>
+          <span id="status-text">準備就緒</span>
+        </div>
+        <span>SKZ 資料詳細查詢</span>
+      </div>
+
+      <!-- 中央聊天視窗 -->
+      <section id="chat-messages" class="chat-messages" aria-label="聊天對話紀錄">
+        <div class="msg-row">
+          <div class="bot-avatar">
+            <img
+              class="tasy-avatar-img"
+              src="./images/tasy-avatar.png"
+              alt="TASY 小指南頭貼"
+            />
+            <svg class="tasy-avatar-svg hidden" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <rect width="100" height="100" fill="#CFE7FA"/>
+              <circle cx="24" cy="30" r="18" fill="#B5DBFA"/>
+              <circle cx="76" cy="30" r="18" fill="#B5DBFA"/>
+              <path d="M50 32 C38 20, 16 28, 18 54 C20 76, 38 88, 50 88 C62 88, 80 76, 82 54 C84 28, 62 20, 50 32 Z" fill="#FFFFFF"/>
+              <path d="M22 14 L26 21 L34 22 L28 28 L29 36 L22 32 L15 36 L16 28 L10 22 L18 21 Z" fill="#FBE468"/>
+              <circle cx="36" cy="54" r="8" fill="#241C42"/>
+              <circle cx="33" cy="51" r="2.8" fill="#FFFFFF"/>
+              <circle cx="64" cy="54" r="8" fill="#241C42"/>
+              <circle cx="61" cy="51" r="2.8" fill="#FFFFFF"/>
+              <ellipse cx="50" cy="63" rx="3" ry="2" fill="#F6A5B8"/>
+              <path d="M45 67 Q47.5 70 50 67 Q52.5 70 55 67" stroke="#241C42" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+
+          <div class="msg-content-wrap">
+            <div class="bubble bubble--bot">Step Out! 嗨 STAY，今天想了解 Stray Kids 的什麼資訊呢？我是你的專屬小指南 TASY，有任何問題都可以問我喔！✨</div>
+
+            <div class="quick-actions" role="group" aria-label="熱門推薦問題">
+              <button type="button" class="quick-btn" data-question="成員介紹">成員介紹</button>
+              <button type="button" class="quick-btn" data-question="熱門主打歌">熱門主打歌</button>
+              <button type="button" class="quick-btn" data-question="SKZOO 角色">SKZOO 角色</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 底部固定輸入列 -->
+      <footer class="chat-footer">
+        <form id="chat-form" class="chat-form">
+          <button
+            type="button"
+            id="voice-btn"
+            class="icon-action-btn voice-btn"
+            aria-label="語音輸入，說完後將自動送出"
+            title="點擊開始語音輸入（說完自動送出）"
+          >
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" y1="19" x2="12" y2="23"></line>
+              <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
+          </button>
+
+          <label for="message-input" class="sr-only">輸入你想詢問 Stray Kids 的問題</label>
+          <input
+            type="text"
+            id="message-input"
+            class="chat-input"
+            autocomplete="off"
+            placeholder="輸入問題，或點左方麥克風說話..."
+          />
+
+          <button type="submit" id="send-btn" class="icon-action-btn send-btn" aria-label="送出訊息">
+            <span>送出</span>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </form>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    /**
+     * 將 ChatPDF 回覆淨化：移除 [P1]、[P2] 等中括號引註標記與「（參考資料第...頁）」字樣，
+     * 並保留完整詳實的繁體中文說明內容。
+     */
+    function sanitizeTasyReply(rawText) {
+      if (!rawText || typeof rawText !== 'string') {
+        return '相關問題，請關注 Stray Kids 官方公告！';
+      }
+      return rawText
+        .replace(/\[P\d+(?:\s*,\s*P?\d+)*\]/gi, '')
+        .replace(/[（(]\s*(?:參考)?資料第[\d、,\s]+頁\s*[）)]/g, '')
+        .replace(/\s+([。！？，、；：])/g, '$1')
+        .replace(/[ \t]{2,}/g, ' ')
+        .trim();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // ==================== 1. ChatPDF API 與角色設定 ====================
+      const CHATPDF_CONFIG = {
+        apiKey: 'sec_vRZtogsjxKJtjrz8mmsgSeFjX5hpSQVT',
+        sourceId: 'cha_a5iLeXa8gg2D9aRUALehm',
+        endpoint: 'https://api.chatpdf.com/v1/chats/message'
+      };
+
+      const TASY_SYSTEM_PROMPT = [
+        '你是熱情有活力的資深 STAY「TASY（小指南）」，充滿正能量、親切且熱愛 Stray Kids，貼合夢幻星空紫羅蘭漸層、雲朵純白與寶寶天藍、耳朵星星亮黃與亮薰衣草紫的形象。',
+        '請用繁體中文回答，語氣像同好聊天一樣自然友善，並請根據上傳資料提供完整、清楚、有條理的詳細解答（不要刻意縮短成兩句話，也不要在文末加上[P1][P2]或「參考資料第幾頁」等引註標記）。',
+        '1. 請優先完整整理資料中的重點與細節回答問題；只有在資料裡確實完全找不到的內容時，才請對方關注 Stray Kids 官方社群（如 X/Twitter、Instagram 或 FANS App）查詢最新資訊，資料裡有的內容請直接給出明確答案。',
+        '2. 來問的人可能是剛入坑的新粉（Baby STAY），請用簡單易懂的話解釋，若提到飯圈用語（如本命、回歸、小卡、手燈等）請稍微白話說明。',
+        '3. 只聊 Stray Kids 相關的事情（如成員介紹、專輯歌曲、世界巡演、SKZOO 角色等），並僅限於資料介紹；如果要買票、購買周邊或個人私生活問題，請對方透過官方售票系統、JYP Shop 查詢或尊重藝人隱私。'
+      ].join('');
+
+      let conversationHistory = [];
+      let isProcessing = false;
+      let bubbleTimer = null;
+      let cheerIndex = 0;
+
+      const tasyCheerLines = [
+        'Step Out! 嗨 STAY～✨',
+        '今天想聽哪首 SKZ 主打歌呢？🎵',
+        'Baby STAY 有不懂的詞都可以問我喔！💜',
+        '一起為 Stray Kids 應援吧！⭐'
+      ];
+
+      // ==================== 2. DOM 元素安全取得 ====================
+      const htmlEl = document.documentElement;
+      const chatForm = document.getElementById('chat-form');
+      const messageInput = document.getElementById('message-input');
+      const sendBtn = document.getElementById('send-btn');
+      const voiceBtn = document.getElementById('voice-btn');
+      const statusText = document.getElementById('status-text');
+      const statusDot = document.getElementById('status-dot');
+      const chatMessages = document.getElementById('chat-messages');
+      const themeToggle = document.getElementById('theme-toggle');
+      const iconSun = document.getElementById('icon-sun');
+      const iconMoon = document.getElementById('icon-moon');
+      const fontSizeButtons = document.querySelectorAll('.font-size-btn');
+      const floatingTasy = document.getElementById('floating-tasy');
+      const floatingTasyBubble = document.getElementById('floating-tasy-bubble');
+      const tasyFloatingImg = document.getElementById('tasy-floating-img');
+      const tasyFloatingSvg = document.getElementById('tasy-floating-svg');
+      const tasyDesktopImg = document.getElementById('tasy-desktop-img');
+      const tasyDesktopSvg = document.getElementById('tasy-desktop-svg');
+      const tasyAvatarImgs = document.querySelectorAll('.tasy-avatar-img');
+
+      // ==================== 3. 圖片備援切換 ====================
+      function bindImageFallback(imgEl, svgEl) {
+        if (!imgEl || !svgEl) return;
+        const showFallback = () => {
+          imgEl.classList.add('hidden');
+          svgEl.classList.remove('hidden');
+        };
+        imgEl.addEventListener('error', showFallback);
+        if (imgEl.complete && imgEl.naturalWidth === 0) {
+          showFallback();
+        }
+      }
+
+      bindImageFallback(tasyFloatingImg, tasyFloatingSvg);
+      bindImageFallback(tasyDesktopImg, tasyDesktopSvg);
+      tasyAvatarImgs.forEach((img) => {
+        const siblingSvg = img.parentElement ? img.parentElement.querySelector('.tasy-avatar-svg') : null;
+        bindImageFallback(img, siblingSvg);
+      });
+
+      // ==================== 4. 漂浮 TASY 與狀態提示 ====================
+      function showFloatingBubble(message, durationMs = 2800) {
+        if (!floatingTasyBubble) return;
+        floatingTasyBubble.textContent = message;
+        floatingTasyBubble.classList.add('is-visible');
+        if (bubbleTimer) {
+          clearTimeout(bubbleTimer);
+        }
+        bubbleTimer = setTimeout(() => {
+          floatingTasyBubble.classList.remove('is-visible');
+        }, durationMs);
+      }
+
+      function updateStatus(type, message) {
+        if (statusText) {
+          statusText.textContent = message;
+        }
+        if (statusDot) {
+          statusDot.className = 'status-dot';
+        }
+        if (floatingTasy) {
+          floatingTasy.classList.remove('is-active-state');
+        }
+
+        if (type === 'listening') {
+          if (statusDot) statusDot.classList.add('is-listening');
+          if (floatingTasy) floatingTasy.classList.add('is-active-state');
+          showFloatingBubble(message, 4500);
+        } else if (type === 'thinking') {
+          if (statusDot) statusDot.classList.add('is-thinking');
+          if (floatingTasy) floatingTasy.classList.add('is-active-state');
+          showFloatingBubble('小指南思考中...⭐', 4500);
+        } else if (type === 'error') {
+          if (statusDot) statusDot.classList.add('is-error');
+          showFloatingBubble('請看官方公告喔！💜', 3500);
+        } else if (floatingTasyBubble && floatingTasyBubble.classList.contains('is-visible')) {
+          floatingTasyBubble.classList.remove('is-visible');
+        }
+      }
+
+      if (floatingTasy) {
+        floatingTasy.addEventListener('click', () => {
+          const line = tasyCheerLines[cheerIndex % tasyCheerLines.length];
+          cheerIndex += 1;
+          showFloatingBubble(line, 3000);
+        });
+      }
+
+      // ==================== 5. 主題與字級無障礙設定 ====================
+      if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+          const isDark = htmlEl.getAttribute('data-theme') === 'dark';
+          const nextTheme = isDark ? 'light' : 'dark';
+          htmlEl.setAttribute('data-theme', nextTheme);
+          themeToggle.setAttribute('aria-pressed', String(!isDark));
+
+          if (iconSun && iconMoon) {
+            if (nextTheme === 'dark') {
+              iconMoon.classList.add('hidden');
+              iconSun.classList.remove('hidden');
+            } else {
+              iconSun.classList.add('hidden');
+              iconMoon.classList.remove('hidden');
+            }
+          }
+        });
+      }
+
+      fontSizeButtons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const selectedSize = btn.getAttribute('data-font-size');
+          if (!selectedSize) return;
+          htmlEl.setAttribute('data-font', selectedSize);
+          fontSizeButtons.forEach((b) => {
+            b.setAttribute('aria-pressed', String(b === btn));
+          });
+        });
+      });
+
+      // ==================== 6. 聊天氣泡渲染 ====================
+      function createAvatarNode() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'bot-avatar';
+
+        const img = document.createElement('img');
+        img.src = './images/tasy-avatar.png';
+        img.alt = 'TASY 小指南頭貼';
+
+        const svgNS = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(svgNS, 'svg');
+        svg.setAttribute('viewBox', '0 0 100 100');
+        svg.setAttribute('fill', 'none');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.classList.add('hidden');
+        svg.innerHTML = `
+          <rect width="100" height="100" fill="#CFE7FA"/>
+          <circle cx="24" cy="30" r="18" fill="#B5DBFA"/>
+          <circle cx="76" cy="30" r="18" fill="#B5DBFA"/>
+          <path d="M50 32 C38 20, 16 28, 18 54 C20 76, 38 88, 50 88 C62 88, 80 76, 82 54 C84 28, 62 20, 50 32 Z" fill="#FFFFFF"/>
+          <path d="M22 14 L26 21 L34 22 L28 28 L29 36 L22 32 L15 36 L16 28 L10 22 L18 21 Z" fill="#FBE468"/>
+          <circle cx="36" cy="54" r="8" fill="#241C42"/>
+          <circle cx="33" cy="51" r="2.8" fill="#FFFFFF"/>
+          <circle cx="64" cy="54" r="8" fill="#241C42"/>
+          <circle cx="61" cy="51" r="2.8" fill="#FFFFFF"/>
+          <ellipse cx="50" cy="63" rx="3" ry="2" fill="#F6A5B8"/>
+          <path d="M45 67 Q47.5 70 50 67 Q52.5 70 55 67" stroke="#241C42" stroke-width="2" stroke-linecap="round" fill="none"/>
+        `;
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(svg);
+        bindImageFallback(img, svg);
+        return wrapper;
+      }
+
+      function scrollToBottom() {
+        if (chatMessages) {
+          chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+      }
+
+      function appendUserMessage(text) {
+        if (!chatMessages) return;
+        const row = document.createElement('div');
+        row.className = 'msg-row msg-row--user';
+
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble bubble--user';
+        bubble.textContent = text;
+
+        row.appendChild(bubble);
+        chatMessages.appendChild(row);
+        scrollToBottom();
+      }
+
+      function appendBotMessage(text) {
+        if (!chatMessages) return;
+        const row = document.createElement('div');
+        row.className = 'msg-row';
+
+        const avatar = createAvatarNode();
+        const contentWrap = document.createElement('div');
+        contentWrap.className = 'msg-content-wrap';
+
+        const bubble = document.createElement('div');
+        bubble.className = 'bubble bubble--bot';
+        bubble.textContent = sanitizeTasyReply(text);
+
+        contentWrap.appendChild(bubble);
+        row.appendChild(avatar);
+        row.appendChild(contentWrap);
+        chatMessages.appendChild(row);
+        scrollToBottom();
+      }
+
+      // ==================== 7. ChatPDF API 呼叫與容錯重試 ====================
+      function buildChatPdfMessages(question, includeHistory = true) {
+        const cleanHistory = [];
+        if (includeHistory && conversationHistory.length >= 2) {
+          const recent = conversationHistory.slice(-4);
+          for (let i = 0; i < recent.length - 1; i += 2) {
+            if (recent[i].role === 'user' && recent[i + 1].role === 'assistant') {
+              cleanHistory.push({ role: 'user', content: recent[i].content });
+              cleanHistory.push({ role: 'assistant', content: recent[i + 1].content });
+            }
+          }
+        }
+
+        const finalUserContent = `${question}\n\n[TASY 角色規範：${TASY_SYSTEM_PROMPT}]`;
+        return [
+          ...cleanHistory,
+          { role: 'user', content: finalUserContent }
+        ];
+      }
+
+      async function requestChatPdf(messagesPayload) {
+        const response = await fetch(CHATPDF_CONFIG.endpoint, {
+          method: 'POST',
+          headers: {
+            'x-api-key': CHATPDF_CONFIG.apiKey,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            sourceId: CHATPDF_CONFIG.sourceId,
+            messages: messagesPayload,
+            referenceSources: false
+          })
+        });
+
+        if (!response.ok) {
+          const errDetail = await response.text().catch(() => '');
+          throw new Error(`HTTP ${response.status}${errDetail ? ': ' + errDetail : ''}`);
+        }
+
+        return response.json();
+      }
+
+      async function sendMessageToTasy(rawQuestion) {
+        const question = (rawQuestion || '').trim();
+        if (!question || isProcessing) return;
+
+        isProcessing = true;
+        if (sendBtn) sendBtn.disabled = true;
+        if (messageInput) messageInput.value = '';
+
+        appendUserMessage(question);
+        updateStatus('thinking', '小指南思考中');
+
+        try {
+          let data;
+          const multiTurnMessages = buildChatPdfMessages(question, true);
+
+          try {
+            data = await requestChatPdf(multiTurnMessages);
+          } catch (_firstErr) {
+            const singleTurnMessages = buildChatPdfMessages(question, false);
+            data = await requestChatPdf(singleTurnMessages);
+          }
+
+          const rawContent = (data && typeof data.content === 'string' && data.content.trim())
+            ? data.content.trim()
+            : '相關問題，請關注 Stray Kids 官方公告！';
+
+          const cleanReply = sanitizeTasyReply(rawContent);
+
+          conversationHistory.push({ role: 'user', content: question });
+          conversationHistory.push({ role: 'assistant', content: cleanReply });
+          if (conversationHistory.length > 4) {
+            conversationHistory = conversationHistory.slice(-4);
+          }
+
+          appendBotMessage(cleanReply);
+          updateStatus('idle', '準備就緒');
+        } catch (error) {
+          console.error('ChatPDF API 錯誤:', error);
+          appendBotMessage('相關問題，請關注 Stray Kids 官方公告！');
+          updateStatus('error', '相關問題，請關注 Stray Kids 官方公告！');
+        } finally {
+          isProcessing = false;
+          if (sendBtn) sendBtn.disabled = false;
+          if (messageInput) messageInput.focus();
+        }
+      }
+
+      if (chatForm) {
+        chatForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          sendMessageToTasy(messageInput ? messageInput.value : '');
+        });
+      }
+
+      if (chatMessages) {
+        chatMessages.addEventListener('click', (e) => {
+          const quickBtn = e.target.closest('.quick-btn');
+          if (quickBtn) {
+            const presetQuestion = quickBtn.getAttribute('data-question');
+            if (presetQuestion) {
+              sendMessageToTasy(presetQuestion);
+            }
+          }
+        });
+      }
+
+      // ==================== 8. 語音輸入（說完自動送出） ====================
+      const SpeechRecognitionAPI = window.SpeechRecognition || window.webkitSpeechRecognition;
+      let recognition = null;
+      let isListening = false;
+
+      if (voiceBtn && SpeechRecognitionAPI) {
+        recognition = new SpeechRecognitionAPI();
+        recognition.lang = 'zh-TW';
+        recognition.continuous = false;
+        recognition.interimResults = true;
+
+        recognition.onstart = () => {
+          isListening = true;
+          voiceBtn.classList.add('is-recording');
+          updateStatus('listening', '請開始說話');
+        };
+
+        recognition.onresult = (event) => {
+          let interimTranscript = '';
+          let finalTranscript = '';
+
+          for (let i = event.resultIndex; i < event.results.length; i++) {
+            const transcript = event.results[i][0].transcript;
+            if (event.results[i].isFinal) {
+              finalTranscript += transcript;
+            } else {
+              interimTranscript += transcript;
+            }
+          }
+
+          if (interimTranscript && messageInput) {
+            messageInput.value = interimTranscript;
+          }
+
+          if (finalTranscript.trim()) {
+            if (messageInput) messageInput.value = finalTranscript.trim();
+            sendMessageToTasy(finalTranscript.trim());
+          }
+        };
+
+        recognition.onerror = (event) => {
+          isListening = false;
+          voiceBtn.classList.remove('is-recording');
+          if (event.error === 'not-allowed') {
+            updateStatus('error', '請允許瀏覽器使用麥克風權限');
+          } else {
+            updateStatus('error', '相關問題，請關注 Stray Kids 官方公告！');
+          }
+        };
+
+        recognition.onend = () => {
+          isListening = false;
+          voiceBtn.classList.remove('is-recording');
+          if (!isProcessing && statusDot && statusDot.classList.contains('is-listening')) {
+            updateStatus('idle', '準備就緒');
+          }
+        };
+
+        voiceBtn.addEventListener('click', () => {
+          if (isProcessing) return;
+          if (isListening) {
+            recognition.stop();
+            return;
+          }
+          updateStatus('listening', '麥克風準備中');
+          try {
+            recognition.start();
+          } catch (_err) {
+            updateStatus('error', '相關問題，請關注 Stray Kids 官方公告！');
+          }
+        });
+      } else if (voiceBtn) {
+        voiceBtn.addEventListener('click', () => {
+          updateStatus('error', '此瀏覽器不支援語音輸入，請改用文字輸入');
+        });
+      }
+    });
+  </script>
+</body>
+</html>
